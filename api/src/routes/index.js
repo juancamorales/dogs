@@ -167,8 +167,8 @@ router.get("/dogs/:idRaza",async (req, res)=>{
 
 router.post("/dogs",async (req, res)=>{
     try {
-        const image = "no tiene imagen"
-        const { name, altura, peso, añosDeVida, temperament} = req.body
+        // const image = "no tiene imagen"
+        const { name, altura, peso, añosDeVida, temperament, image} = req.body
         if(name && peso && altura && añosDeVida){
             const ss = temperament.map((i)=> user= {
                 name: i

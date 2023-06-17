@@ -47,6 +47,9 @@ const CreateDog = (props)=>{
   })
 
   const [errors, setErrors] = useState({});
+  const [loding, setLonding] = useState(false);
+
+  const [values, setValues] = useState({ image: ""});
 
   let contador1 = 0
 
@@ -94,7 +97,8 @@ const CreateDog = (props)=>{
         altura:`${sta.altura_min} - ${sta.altura_max}`,
         peso:`${sta.peso_min} - ${sta.peso_max}`,
         temperament:sta.id,
-        añosDeVida:`${sta.vida_min} - ${sta.vida_max} years`
+        añosDeVida:`${sta.vida_min} - ${sta.vida_max} years`,
+        image: values.image
     })
   }
 
@@ -111,6 +115,26 @@ const CreateDog = (props)=>{
       return undefined
     }
   }
+  const uqdat = async (e) => {
+    const files = e.target.files;
+    const data2 = new FormData();
+    data2.append("file", files[0]);
+    data2.append("upload_preset", "images");
+    setLonding(true);
+    const res = await fetch(
+      "https://api.cloudinary.com/v1_1/bl3ychz/image/upload",
+      {
+        method: "POST",
+        body: data2,
+      }
+    );
+    const file = await res.json();
+    setLonding(false);
+    return setValues({
+      ...values,
+      image: file.secure_url,
+    });
+  };
 
   return(
     <div className="gra">
@@ -198,6 +222,16 @@ const CreateDog = (props)=>{
                     <option key={i+100} value={i}>{i}</option>
                 )}
               </select>
+              <label for="image" className="selectI">
+              <h3>Select Image</h3>
+              <input
+                id="image"
+                className="select-image"
+                type="file"
+                name="image"
+                onChange={uqdat}
+              />
+            </label>
               {errors?.vida_max && (<p className="danger">{errors?.vida_max}</p>)}
               {errors?.vida_min && (<p className="danger">{errors?.vida_min}</p>)}
               {(!errors.vida_max?.length > 0 && !errors.vida_min?.length > 0 && !errors.peso_min?.length > 0 && !errors.peso_max?.length > 0 && !errors.altura_min?.length > 0 && !errors.altura_max?.length > 0 && !errors.name?.length > 0 && sta.name) && 
