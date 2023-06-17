@@ -1,0 +1,24 @@
+.cnt {
+    /* padding-top: 10px; */
+    width: 580px;
+    height: 580px;
+}
+.form-container {
+    display:flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.form-container button {
+    margin-left: 20px;
+}
+.label {
+    padding-right: 10px;
+}
+h1.p{
+    font-style: italic;
+    color: blue;
+}
+div.c{
+    background-color: blueviolet;
+}
